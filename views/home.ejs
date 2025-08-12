@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upload Centered</title>
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
+</head>
+<body class="bg-gray-700">
+
+  <!-- Full Screen Wrapper -->
+  <div class="w-screen h-screen flex flex-col items-start justify-center">
+
+    <!-- Upload Button -->
+    <div class="flex p-1 justify-between w-full">
+      <button onclick="showDropzone()"
+      class=" text-white px-4 py-2 m-4 rounded bg-blue-600 hover:bg-blue-500">
+      Upload File
+      </button>
+      <button class="text-white font-light px-4 py-2 m-4 rounded bg-red-600 hover:bg-red-500">
+        <a href='/users/logout'>Logout</a>
+      </button>
+    </div>
+
+   <div class="files p-5 w-screen h-screen bg-gray-700 flex flex-col gap-2">
+      <% files.forEach((file)=>{  %>
+        <div class="p-2 px-6 cursor-pointer bg-gray-300 text-black rounded-md flex justify-between items-center">
+        <h1><%= file.originalname %></h1>
+
+        <a 
+        href="/download/<%= file.path %>"
+        class="text-blue-500 hover:text-blue-700" 
+        download="<%= file.originalname %>"
+        target="_blank"
+        >
+          <i class="ri-download-line"></i>
+        </a>
+        </div>
+      <% }) %>
+    </div>
+
+    <!-- Form with Dropzone -->
+    <form action="/upload" method="post" enctype="multipart/form-data" 
+    class="dzone hidden w-full h-full absolute flex items-center justify-center bg-gray-700"  >
+    <div onclick=hideDropzone() class="crossForClose absolute top-3 right-3 text-2xl text-white cursor-pointer hidden">
+        <i class="ri-close-large-line"></i>
+    </div>
+      <div class="backdrop-blur rounded-lg w-2/5 h-3/5 flex flex-col justify-between ">
+        <label for="dropzone-file" class="w-full h-4/5 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:bg-gray-400 dark:bg-gray-700 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+          <div class="w-full h-full flex flex-col items-center justify-center pt-5 pb-6 bg-gray-500">
+            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 20 16">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+            </svg>
+            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+              <span class="font-semibold">Click to upload</span>or drag and drop
+            </p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              SVG, PNG, JPG or GIF (MAX. 800x400px)
+            </p>
+            <input id="dropzone-file" name="file" type="file" class="hidden" />
+          </div>
+        </label>
+        <button type="submit" class="w-1/5 h-10 mb-10 px-6 py-1 bg-gray-800 border-1 text-white rounded hover:bg-blue-500 hover:bg-gray-600">
+        Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+<script>
+    function showDropzone(){
+        const dropzone = document.querySelector('.dzone');
+        dropzone.style.display = 'flex';
+        const crossForClose = document.querySelector('.crossForClose');
+        crossForClose.style.display = 'block';
+        document.querySelector('files').style.display = 'none';
+
+    }
+    function hideDropzone(){
+        const dropzone = document.querySelector('.dzone');
+        dropzone.style.display = 'none';
+        const crossForClose = document.querySelector('.crossForClose');
+        crossForClose.style.display = 'none';
+    }
+</script>
+</body>
+</html>
