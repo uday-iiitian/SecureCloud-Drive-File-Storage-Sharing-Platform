@@ -36,9 +36,9 @@ router.post('/login', async (req, res) => {
     // Logic to handle user login
     const {email, password} = req.body;
     console.log(email, password);
-    // if (!email || !passsword) {
-    //     return res.status(400).json({ error: 'All fields are required' });
-    // }
+    if (!email || !password) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
     const user = await userModel.findOne({ email: email });
     if(!user){
         return res.status(404).json({ error: 'User not found' });

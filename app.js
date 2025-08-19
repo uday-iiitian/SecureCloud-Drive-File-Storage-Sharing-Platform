@@ -8,9 +8,13 @@ const connectDB = require('./config/db');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
+const port = process.env.PORT || 4000;
 
 app.use(cors());
+
+//Database connection
 connectDB();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -19,4 +23,4 @@ app.set('view engine', 'ejs');
 app.use('/', indexRoutes);
 app.use('/users', userRoutes);
 
-app.listen(3000)
+app.listen(port)
