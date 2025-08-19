@@ -1,10 +1,11 @@
 const Firebase = require('firebase-admin');
 
-const serviceAccount = require('../drive-d9c09-firebase-adminsdk-fbsvc-98b3c6b8d2.json');
+// Parse JSON from environment variable
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 const firebase = Firebase.initializeApp({
     credential: Firebase.credential.cert(serviceAccount),
-    storageBucket: 'drive-d9c09.firebasestorage.app'
-})
+    storageBucket: 'drive-d9c09.appspot.com'   // <-- check your Firebase bucket name in Firebase Console
+});
 
 module.exports = Firebase;
